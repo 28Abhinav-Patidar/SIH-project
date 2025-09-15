@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { FaUser, FaUsers, FaBriefcase, FaLaptop, FaInfoCircle, FaEnvelope } from "react-icons/fa";
+import { FaUser, FaUsers, FaBriefcase,FaFileAlt,FaCalendar, FaLaptop, FaInfoCircle, FaEnvelope } from "react-icons/fa";
 
 import Login from "./components/Login";
 import Profile from "./components/Profile";
@@ -12,7 +12,11 @@ import Inbox from "./components/Inbox";
 import JobsInternships from "./components/JobsInternships";
 import JobsInternshipsPage from "./components/JobsInternshipsPage";
 import ChatBox from "./components/ChatBox";
+import Events from "./components/Events";
+import Documents from "./components/Documents";
+import About from "./components/About";
 import "./App.css";
+import CareerDetail from "./components/CareerDetail";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,10 +27,18 @@ function App() {
         <header className="header">
           <h1>Alumni Connect</h1>
           {isLoggedIn && (
-            <div className="header-right">
-              {/* Inbox near search bar */}
-              <SearchBar />
+           <div className="header-right">
+            {/* Inbox */}
+            <Link to="/chat" className="inbox-btn">
+              <FaEnvelope /> Inbox
+            </Link>
+
+            {/* Search Bar */}
+            <div className="search-bar-wrapper">
+              <input type="text" placeholder="Search alumni, jobs..." />
+              <button className="search-btn">Search</button>
             </div>
+          </div>
           )}
         </header>
 
@@ -51,6 +63,12 @@ function App() {
               <Link to="/jobs" className="menu-item">
                 <FaLaptop /> <span>Jobs & Internships</span>
               </Link>
+              <Link to="/events" className="menu-item">
+                <FaCalendar/><span>Events</span>
+              </Link>
+              <Link to="/documents" className="menu-item">
+                <FaFileAlt/> <span>Documents</span>
+              </Link>
               <Link to="/about" className="menu-item">
                 <FaInfoCircle /> <span>About Us</span>
               </Link>
@@ -60,27 +78,82 @@ function App() {
             {/* Main Content */}
             <main className="main-content">
               <Routes>
-                <Route
+               <Route
                   path="/"
                   element={
                     <div className="posts-section">
-                      <div className="post">Post 1: Alumni meet this weekend 🎉</div>
-                      <div className="post">Post 2: Internship opportunity at Google 🚀</div>
-                      <div className="post">Post 3: Job opening at Microsoft 💼</div>
-                      <div className="post">Post 4: Alumni success story 🌟</div>
-                      <div className="post">Post 5: Symbiosis Alumni event 📢</div>
-                      <div className="post">Post 6: Career guidance session 🧑‍🏫</div>
-                      <div className="post">Post 7: New project collaboration 🤝</div>
+                      {[
+                        {
+                          id: 1,
+                          text: "Alumni meet this weekend 🎉",
+                          image: "https://via.placeholder.com/600x300?text=Alumni+Event"
+                        },
+                        {
+                          id: 2,
+                          text: "Internship opportunity at Google 🚀",
+                          image: "https://via.placeholder.com/600x300?text=Google+Internship"
+                        },
+                        {
+                          id: 3,
+                          text: "Job opening at Microsoft 💼",
+                          image: "https://via.placeholder.com/600x300?text=Microsoft+Job"
+                        },
+                        {
+                          id: 4,
+                          text: "Alumni success story 🌟",
+                          image: "https://via.placeholder.com/600x300?text=Success+Story"
+                        },
+                        {
+                          id: 5,
+                          text: "Symbiosis Alumni event 📢",
+                          image: "https://via.placeholder.com/600x300?text=Symbiosis+Event"
+                        },
+                        {
+                          id: 6,
+                          text: "Career guidance session 🧑‍🏫",
+                          image: "https://via.placeholder.com/600x300?text=Career+Session"
+                        },
+                        {
+                          id: 7,
+                          text: "New project collaboration 🤝",
+                          image: "https://via.placeholder.com/600x300?text=Project+Collaboration"
+                        }
+                      ].map((post) => (
+                        <div key={post.id} className="post-card">
+                          <div className="post-header">
+                            <img
+                              src="https://via.placeholder.com/50"
+                              alt="profile"
+                              className="post-profile-pic"
+                            />
+                            <div>
+                              <h4>Alumni Connect</h4>
+                              <p>Just now</p>
+                            </div>
+                          </div>
+                          <p className="post-text">{post.text}</p>
+                          {post.image && <img src={post.image} alt="post" className="post-image" />}
+                          <div className="post-actions">
+                            <button>Like</button>
+                            <button>Comment</button>
+                            <button>Share</button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   }
                 />
+
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/career" element={<Career />} />
+                <Route path="/career/:careerName" element={<CareerDetail />} />
                 <Route path="/career-suggestions" element={<CareerSuggestion />} />
                 <Route path="/jobs" element={<JobsInternshipsPage />} />
                 <Route path="/chat" element={<ChatBox />} />
-                <Route path="/about" element={<div>ℹ️ About Us: Alumni Connect Platform</div>} />
+                <Route path="/documents" element={<Documents />} />
+                <Route path="/about" element={<About/>} />
+                <Route path="/events" element={<Events />} />
               </Routes>
             </main>
           </div>

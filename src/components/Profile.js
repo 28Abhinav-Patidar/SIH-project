@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaLinkedin, FaUpload } from "react-icons/fa";
 import "./Profile.css";
 
 function Profile() {
@@ -7,13 +8,9 @@ function Profile() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("userProfile");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    if (storedUser) setUser(JSON.parse(storedUser));
     const storedPic = localStorage.getItem("profilePic");
-    if (storedPic) {
-      setProfilePic(storedPic);
-    }
+    if (storedPic) setProfilePic(storedPic);
   }, []);
 
   const handlePhotoUpload = (e) => {
@@ -29,12 +26,15 @@ function Profile() {
   };
 
   if (!user) {
-    return <div className="profile-container">No profile found. Please create an account.</div>;
+    return (
+      <div className="profile-container">
+        <div className="no-profile">No profile found. Please create an account.</div>
+      </div>
+    );
   }
 
   return (
     <div className="profile-container">
-      {/* Left side - Profile Card */}
       <div className="profile-card">
         <div className="profile-photo">
           {profilePic ? (
@@ -42,24 +42,35 @@ function Profile() {
           ) : (
             <div className="placeholder">+</div>
           )}
-          <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+          <label htmlFor="upload-photo" className="upload-btn">
+            <FaUpload /> Upload Photo
+          </label>
+          <input
+            id="upload-photo"
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoUpload}
+          />
         </div>
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-        <p>{user.college}</p>
-        <p>Pass Out: {user.passOutYear}</p>
-        <a href={user.linkedin} target="_blank" rel="noreferrer">
-          LinkedIn Profile
-        </a>
-      </div>
 
-      {/* Right side - Details */}
-      <div className="profile-details">
-        <h3>About Me</h3>
-        <p><strong>Username:</strong> {user.username}</p>
-        <p><strong>Enrollment No:</strong> {user.enrollment}</p>
-        <p><strong>Current Position:</strong> {user.position}</p>
-        <p><strong>Skills:</strong> (You can add skills feature later)</p>
+        <h2 className="user-name">{user.name}</h2>
+        <p className="user-position">{user.position || "Current Position"}</p>
+
+        <div className="profile-details">
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>College:</strong> {user.college}</p>
+          <p><strong>Pass Out:</strong> {user.passOutYear}</p>
+          <p><strong>Username:</strong> {user.username}</p>
+          <p><strong>Enrollment No:</strong> {user.enrollment}</p>
+          {user.linkedin && (
+            <p>
+              <FaLinkedin />{" "}
+              <a href={user.linkedin} target="_blank" rel="noreferrer">
+                LinkedIn Profile
+              </a>
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
