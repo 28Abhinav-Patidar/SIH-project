@@ -9,11 +9,11 @@ body {
 
 /* Header */
 .header {
-  background: linear-gradient(90deg, #0056b3, #0073e6);
+  background: linear-gradient(90deg, #0056b3, #b8cbdf);
   color: white;
-  padding: 20px;
+  padding: 8px;
   text-align: center;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: bold;
   box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
 }
@@ -84,18 +84,25 @@ body {
 
 /* Search bar */
 .search-bar {
+  width: 100%;
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  justify-content: center; /* center everything */
+  gap: 10px;               /* space between elements */
+  margin: 15px 0;
 }
 
 .search-bar input {
-  flex: 1;
+ width: 60%;
   max-width: 500px;
-  padding: 10px;
-  border: 1px solid #bbb;
-  border-radius: 8px 0 0 8px;
+  padding: 12px 18px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 30px 0 0 30px;
   outline: none;
+}
+.search-bar input:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.4);
 }
 
 .search-bar button {
@@ -106,11 +113,41 @@ body {
   border-radius: 0 8px 8px 0;
   cursor: pointer;
 }
+.search-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0 30px 30px 0;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.search-btn:hover {
+  background-color: #0056b3;
+}
 
 .search-bar button:hover {
   background: #005bb5;
 }
-
+.inbox-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  background: white;
+  color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: all 0.3s ease;
+  margin-left: 100px;
+}
+.inbox-btn:hover {
+  background: #007bff;
+  color: white;
+}
 /* Chat */
 .chat-box {
   max-height: 150px;
@@ -130,4 +167,70 @@ button {
 
 button:hover {
   opacity: 0.9;
+}
+/* Dashboard layout */
+.dashboard {
+  display: flex;
+  height: calc(100vh - 70px); /* Subtract header height */
+}
+
+/* Sidebar */
+.sidebar {
+   width: 250px;
+  background: #1e1e2f; /* Dark theme */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  border-right: 1px solid #333;
+}
+
+.sidebar .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 19px;
+  border-radius: 8px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.sidebar .menu-item:hover {
+  background: #2e2e42;
+}
+.sidebar .menu-item span {
+  font-size: 1.3rem;
+}
+.sidebar .menu-item svg {
+  font-size: 1.2rem;
+  color: #ffcc00;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+/* SearchBar stays fixed at top */
+.main-content > .search-bar {
+  margin-bottom: 15px;
+}
+
+/* Scrolling posts */
+.posts-section {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Post cards */
+.post {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
 }

@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
+import { FaEnvelope } from "react-icons/fa";
+import "./SearchBar.css";
 
 function SearchBar() {
-  const [query, setQuery] = useState("");
-
-  const handleSearch = () => {
-    alert("Searching for: " + query);
-  };
-
   return (
     <div className="search-bar">
       <input
         type="text"
-        placeholder="Search alumni, jobs, communities..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        placeholder="🔍 Search alumni, communities, jobs..."
       />
-      <button onClick={handleSearch}>Search</button>
+      <button className="search-btn">Search</button>
+
+      {/* Inbox Button */}
+      <button className="inbox-btn">
+        <FaEnvelope /> Inbox
+      </button>
     </div>
   );
 }

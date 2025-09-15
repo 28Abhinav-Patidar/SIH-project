@@ -1,34 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Inbox() {
-  const [messages, setMessages] = useState([
-    { from: "Alice", text: "Hi, how are you?" },
-    { from: "You", text: "I’m good, thanks!" },
-  ]);
-  const [newMsg, setNewMsg] = useState("");
-
-  const sendMessage = () => {
-    if (newMsg.trim() !== "") {
-      setMessages([...messages, { from: "You", text: newMsg }]);
-      setNewMsg("");
-    }
-  };
+  const navigate = useNavigate();
 
   return (
     <div className="card">
-      <h2>Inbox (Direct Chat)</h2>
-      <div className="chat-box">
-        {messages.map((msg, index) => (
-          <p key={index}><b>{msg.from}:</b> {msg.text}</p>
-        ))}
-      </div>
-      <input
-        type="text"
-        placeholder="Type a message..."
-        value={newMsg}
-        onChange={(e) => setNewMsg(e.target.value)}
-      />
-      <button onClick={sendMessage}>Send</button>
+      <h2>Inbox</h2>
+      <p>Connect with your alumni network through chat.</p>
+      <button
+        onClick={() => navigate("/chat")}
+        style={{
+          padding: "10px 15px",
+          borderRadius: "8px",
+          border: "none",
+          background: "#28a745",
+          color: "white",
+          cursor: "pointer",
+          marginTop: "10px"
+        }}
+      >
+        Open Chat
+      </button>
     </div>
   );
 }
