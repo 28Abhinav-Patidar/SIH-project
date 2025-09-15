@@ -1,0 +1,67 @@
+.login-container {
+  width: 350px;
+  margin: 80px auto;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+.tab-buttons .active {
+  background: #007bff;
+  color: white;
+}
+
+.login-form,
+.create-account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-form input,
+.create-account-form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.login-form button,
+.create-account-form button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-form button:hover,
+.create-account-form button:hover {
+  background: #0056b3;
+}
