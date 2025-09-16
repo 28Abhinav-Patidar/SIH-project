@@ -1,79 +1,52 @@
-import React, { useState, useEffect } from "react";
-import { FaLinkedin, FaUpload } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
 
-function Profile() {
-  const [user, setUser] = useState(null);
-  const [profilePic, setProfilePic] = useState(null);
+const Profile = () => {
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("userProfile");
-    if (storedUser) setUser(JSON.parse(storedUser));
-    const storedPic = localStorage.getItem("profilePic");
-    if (storedPic) setProfilePic(storedPic);
+    // Get user id from localStorage (set after login)
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      setLoading(false);
+      return;
+    }
+
+    const user = JSON.parse(storedUser);
+
+    // Fetch profile from backend
+    fetch(`http://127.0.0.1:8000/profile/${user.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProfile(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching profile:", err);
+        setLoading(false);
+      });
   }, []);
 
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePic(reader.result);
-        localStorage.setItem("profilePic", reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  if (loading) {
+    return <div className="profile-container">Loading profile...</div>;
+  }
 
-  if (!user) {
-    return (
-      <div className="profile-container">
-        <div className="no-profile">No profile found. Please create an account.</div>
-      </div>
-    );
+  if (!profile) {
+    return <div className="profile-container">No profile data found.</div>;
   }
 
   return (
     <div className="profile-container">
+      <h2 className="profile-heading">My Profile</h2>
       <div className="profile-card">
-        <div className="profile-photo">
-          {profilePic ? (
-            <img src={profilePic} alt="Profile" />
-          ) : (
-            <div className="placeholder">+</div>
-          )}
-          <label htmlFor="upload-photo" className="upload-btn">
-            <FaUpload /> Upload Photo
-          </label>
-          <input
-            id="upload-photo"
-            type="file"
-            accept="image/*"
-            onChange={handlePhotoUpload}
-          />
-        </div>
-
-        <h2 className="user-name">{user.name}</h2>
-        <p className="user-position">{user.position || "Current Position"}</p>
-
-        <div className="profile-details">
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>College:</strong> {user.college}</p>
-          <p><strong>Pass Out:</strong> {user.passOutYear}</p>
-          <p><strong>Username:</strong> {user.username}</p>
-          <p><strong>Enrollment No:</strong> {user.enrollment}</p>
-          {user.linkedin && (
-            <p>
-              <FaLinkedin />{" "}
-              <a href={user.linkedin} target="_blank" rel="noreferrer">
-                LinkedIn Profile
-              </a>
-            </p>
-          )}
-        </div>
+        <p><strong>Name:</strong> {profile.name}</p>
+        <p><strong>Email:</strong> {profile.email}</p>
+        <p><strong>College:</strong> {profile.college}</p>
+        <p><strong>Pass-out Year:</strong> {profile.pass_out_year}</p>
       </div>
     </div>
   );
-}
+};
 
 export default Profile;
